@@ -13,14 +13,14 @@ Run `npm run dev` or double-click `preview.cmd` on Windows, then open `http://12
 - `index.html`: page copy, figure captions, and media links.
 - `styles.css`: desktop and mobile layout.
 - `script.js`: video controls, figure enlargement, and example tabs.
-- `gallery.js` and `gallery.css`: the consolidated rollout gallery and synchronized inspection player.
+- `gallery.js` and `gallery.css`: the consolidated rollout gallery and its inline synchronized signal panels.
 - `rollout-data.js`: anonymous per-replanning model predictions paired with each displayed video.
 - `figure1.webp` through `figure5.webp`: five web figures.
 - `lehome-lt/st/lp/sp.mp4`: one successful rollout for each of the four garment categories.
 - `libero-01.mp4` through `libero-10.mp4`: one successful rollout for each LIBERO-Long task, in benchmark order (one-based display labels).
 - `*.jpg`: frames extracted from the corresponding videos.
 
-Videos appear in a single section. The LeHome-Fold gallery uses four columns on desktop; the LIBERO-Long gallery uses five. Expand any video to inspect current process phase, local progress, the selected candidate's forecast, and candidate critic scores. The same recorded values update during inline playback. All media retain the original frames, temporal order, frame rate, and playback speed; audio and source metadata were removed.
+Videos appear in a single section. Both galleries use two columns on desktop and one on narrow screens. Every video directly displays the current predicted phase, local progress, selected critic score, a recorded-phase timeline with a playback marker, the selected candidate's forecast, and candidate scores. No enlarged view is required. The recorded timeline uses video seconds; the separate future forecast ribbon uses candidate action offsets. All media retain the original frames, temporal order, frame rate, and playback speed; audio and source metadata were removed.
 
 Process signals are online model predictions, not ground-truth phase annotations. Critic scores are candidate predictions, separate from the official evaluator's binary episode result. Telemetry uses a step hold at the most recent replanning time, without interpolation. LeHome-Fold aligns five control steps per inference to 30 fps; LIBERO-Long preserves its ten-frame settling prefix and aligns control step `k` to frame `k + 10` at 20 fps. The phase dictionary is Transit, Precontact, Engage, Manipulate, Disengage, Settle, Verify.
 

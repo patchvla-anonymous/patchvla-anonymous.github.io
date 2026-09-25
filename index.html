@@ -68,7 +68,7 @@
       <div class="section-heading"><p class="eyebrow">04 / Demonstrations</p><h2 id="gallery-title">Four garment types.<br><em>Ten sequential tasks.</em></h2><p class="section-intro">Successful PatchVLA rollouts, with recorded process and critic signals synchronized to playback.</p></div>
       <div class="rollout-group"><div class="rollout-group-heading"><div><span class="benchmark-kicker">Deformable manipulation</span><h3>LeHome-Fold</h3></div><p>Long sleeves · Short sleeves · Long pants · Short pants</p></div><div id="lehome-gallery" class="rollout-grid lehome-grid"></div></div>
       <div class="rollout-group"><div class="rollout-group-heading"><div><span class="benchmark-kicker">Sequential object manipulation</span><h3>LIBERO-Long</h3></div><p>One successful rollout for each of the ten tasks</p></div><div id="libero-gallery" class="rollout-grid libero-grid"></div></div>
-      <p class="media-note" id="rollout-note">Signals show recorded model predictions at each replanning step. Critic scores evaluate candidates; they are separate from the evaluator's final success outcome. Expand a rollout to inspect its process signals and candidate scores.</p>
+      <p class="media-note" id="rollout-note">The timeline shows recorded phase predictions over video time; its marker follows playback. The separate forecast ribbon shows the selected candidate's future action phases. Local progress and critic scores are model predictions, distinct from the evaluator's final success outcome.</p>
       <noscript><p>Enable JavaScript to view the interactive rollout gallery.</p></noscript>
     </section>
 
@@ -77,11 +77,6 @@
   <footer class="site-footer wrap"><a class="wordmark" href="#">PatchVLA<span class="wordmark-dot">.</span></a><p>Anonymous project page for double-blind review.</p><a href="#" class="back-top">Back to top ↑</a></footer>
 
   <dialog id="figure-dialog" aria-labelledby="figure-dialog-title"><div class="dialog-top"><h2 id="figure-dialog-title">Figure</h2><button id="close-figure" type="button" aria-label="Close enlarged figure">×</button></div><img id="dialog-image" alt=""><p>Press Esc or click outside the figure to close.</p></dialog>
-  <dialog id="rollout-dialog" aria-labelledby="rollout-dialog-title">
-    <div class="dialog-top"><div><p id="rollout-dialog-benchmark" class="eyebrow"></p><h2 id="rollout-dialog-title">Rollout</h2></div><button id="close-rollout" type="button" aria-label="Close rollout">×</button></div>
-    <div class="rollout-detail-layout"><div><video id="detail-video" controls muted playsinline preload="metadata"></video><div class="detail-phase-strip" id="detail-phase-strip"></div></div>
-      <aside class="signal-panel" aria-label="Recorded model signals"><p class="signal-kicker">Recorded at replanning</p><h3 id="detail-phase">—</h3><div class="progress-label"><span>Local progress</span><strong id="detail-progress-value">—</strong></div><div class="progress-track"><span id="detail-progress-bar"></span></div><div class="critic-readout"><span>Selected critic score</span><strong id="detail-critic">—</strong></div><svg id="critic-history" viewBox="0 0 300 76" role="img" aria-label="Selected critic scores through the current playback time"></svg><div class="candidate-heading"><span>Candidate critic scores</span><span class="selected-key">Selected</span></div><div id="candidate-scores"></div><p id="detail-search" class="search-note"></p><p id="detail-signal-note" class="signal-note"></p></aside></div>
-  </dialog>
-  <p id="player-status" class="sr-only" aria-live="polite"></p>
+<p id="player-status" class="sr-only" aria-live="polite"></p>
 </body>
 </html>
