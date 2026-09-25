@@ -7,10 +7,10 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#faf9f6">
-  <meta property="og:title" content="PatchVLA — Process-Aware Control with Critic-Guided Latent Search">
+  <meta property="og:title" content="PatchVLA: Process-Aware Test-Time Critic-Guided Search for Long-Horizon Manipulation">
   <meta property="og:description" content="A shared process representation for generating, evaluating, and refining robot actions. Anonymous research project page.">
   <meta property="og:type" content="website">
-  <title>PatchVLA | Process-Aware Control with Critic-Guided Latent Search</title>
+  <title>PatchVLA: Process-Aware Test-Time Critic-Guided Search for Long-Horizon Manipulation</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="gallery.css">
@@ -29,9 +29,24 @@
 
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
-      <p class="eyebrow"><span class="status-dot"></span> Anonymous submission · ICLR 2027</p>
-      <h1 id="hero-title"><span class="hero-name">PatchVLA</span><br>Process-Aware Control<br><span class="muted-title">with Critic-Guided Latent Search</span></h1>
+      <p class="eyebrow"><span class="status-dot"></span> Anonymous research project</p>
+      <h1 id="hero-title" aria-label="PatchVLA: Process-Aware Test-Time Critic-Guided Search for Long-Horizon Manipulation"><span class="hero-name">PatchVLA:</span><br>
+        <span class="hero-title-line"><strong class="title-initial">P</strong>rocess-<strong class="title-initial">A</strong>ware <strong class="title-initial">T</strong>est-Time</span>
+        <span class="hero-title-line"><strong class="title-initial">C</strong>ritic-Guided Search</span>
+        <span class="muted-title">for Long-<strong class="title-initial">H</strong>orizon Manipulation</span>
+      </h1>
+      <p class="hero-expansion"><abbr title="vision-language-action">VLA</abbr> · vision-language-action</p>
       <p class="hero-deck">Forecast the process. Evaluate the candidate.<br class="desktop-break"> Refine the action before execution.</p>
+      <figure class="overview-video" id="overview-video" aria-labelledby="overview-video-caption">
+        <div class="overview-video-frame">
+          <video controls playsinline preload="metadata" width="1920" height="1080" poster="assets/videos/patchvla-overview-poster.jpg" aria-label="PatchVLA method overview" aria-describedby="overview-video-caption">
+            <source src="assets/videos/patchvla-overview.mp4" type="video/mp4">
+            <track kind="captions" src="assets/videos/patchvla-overview.en.vtt" srclang="en" label="English">
+            Your browser does not support embedded video. <a href="assets/videos/patchvla-overview.mp4">Download the overview video</a>.
+          </video>
+        </div>
+        <figcaption id="overview-video-caption"><strong>Video overview.</strong> Process forecasts, candidate evaluation, and critic-guided test-time search.</figcaption>
+      </figure>
       <div class="hero-actions">
         <a class="button button-dark" href="#method"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6v6H4zM14 13h6v6h-6zM14 8h5v2M5 16h5v-2"/></svg>Explore the method</a>
         <a class="button button-light" href="#demonstrations"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7z"/></svg>Watch the rollouts</a>

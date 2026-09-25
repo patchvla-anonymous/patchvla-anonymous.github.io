@@ -1,0 +1,212 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:07.233
+A robot can propose several plausible actions, but choosing
+among them requires anticipating their consequences.
+
+2
+00:00:07.233 --> 00:00:11.053
+Seemingly plausible actions can lead to different task outcomes.
+
+3
+00:00:11.053 --> 00:00:14.553
+To address this ambiguity, we propose PatchVLA.
+
+4
+00:00:14.553 --> 00:00:22.367
+It forecasts each candidate's manipulation process, connecting
+action generation, sequence evaluation, and latent search.
+
+5
+00:00:22.367 --> 00:00:29.517
+Each forecast tracks interaction phase, local subtask
+progress, and the probability of crossing a subtask boundary.
+
+6
+00:00:29.517 --> 00:00:36.130
+Aligned with the candidate's actions, these signals describe
+how contact, manipulation, and transitions may unfold
+
+7
+00:00:36.130 --> 00:00:38.300
+throughout the proposed sequence.
+
+8
+00:00:38.300 --> 00:00:41.525
+A process-conditioned actor generates action chunks,
+
+9
+00:00:41.525 --> 00:00:45.460
+and a sequence critic evaluates each chunk with its aligned forecast.
+
+10
+00:00:45.460 --> 00:00:51.660
+An MPPI-like update uses candidate costs
+to refine the latent proposal distribution.
+
+11
+00:00:51.660 --> 00:00:58.667
+The controller selects one complete evaluated
+candidate, executes a prefix, then observes and replans.
+
+12
+00:00:58.667 --> 00:01:02.557
+To learn this process-aware controller, we first prepare training data.
+
+13
+00:01:02.557 --> 00:01:08.807
+Experts provide a small set of anchors, then a vision-language
+model extends the annotations for human review.
+
+14
+00:01:08.807 --> 00:01:12.167
+Demonstrations train the actor and process forecasts,
+
+15
+00:01:12.167 --> 00:01:16.433
+while recorded candidate outcomes train and calibrate the sequence critic.
+
+16
+00:01:16.433 --> 00:01:23.013
+We evaluate a shared problem: choosing actions that advance
+a multi-stage task as interactions and subgoals change.
+
+17
+00:01:23.013 --> 00:01:28.608
+Our two benchmarks examine this problem in parallel
+domains: deformable garments and rigid objects.
+
+18
+00:01:28.608 --> 00:01:34.993
+LeHome-Fold uses LeHome Challenge folding tasks,
+with sleeves and torso as successive milestones.
+
+19
+00:01:34.993 --> 00:01:39.213
+Candidate forecasts describe the process along each proposed action sequence,
+
+20
+00:01:39.213 --> 00:01:42.167
+while latent refinement guides the next proposal.
+
+21
+00:01:42.167 --> 00:01:50.207
+In the complementary rigid-object setting, LIBERO-Long uses the
+LIBERO-10 tasks to study the same multi-stage decision problem.
+
+22
+00:01:50.207 --> 00:01:53.897
+Here, the robot places a soup can, then retrieves tomato sauce.
+
+23
+00:01:53.897 --> 00:01:59.487
+Across observations, local progress rises, resets
+after the first placement, and rises again.
+
+24
+00:01:59.487 --> 00:02:03.917
+At this decision, C1 is selected for its lower combined planning cost,
+
+25
+00:02:03.917 --> 00:02:06.533
+despite its slightly lower critic score.
+
+26
+00:02:06.533 --> 00:02:11.683
+The broader evaluation spans four garment
+categories, from sleeves to trouser legs,
+
+27
+00:02:11.683 --> 00:02:14.863
+with the predicted interaction phase shown during each rollout.
+
+28
+00:02:14.863 --> 00:02:22.003
+It also covers all ten LIBERO-Long tasks, involving
+placement, articulated objects, and sequential goals.
+
+29
+00:02:22.003 --> 00:02:28.567
+Together, these examples show how the same process
+representation follows varied geometries and interactions.
+
+30
+00:02:28.567 --> 00:02:33.077
+These examples are reflected in the quantitative results.
+
+31
+00:02:33.077 --> 00:02:39.852
+PatchVLA achieves 76.25% overall success
+on LeHome-Fold and 70% on unseen garments,
+
+32
+00:02:39.852 --> 00:02:43.533
+leading the compared methods on both measures.
+
+33
+00:02:43.533 --> 00:02:49.938
+On LIBERO-Long, PatchVLA reaches 96.20%
+success and 97.70% final new-goal completion.
+
+34
+00:02:49.938 --> 00:02:53.858
+Beyond success, we measure progress accumulated over time,
+
+35
+00:02:53.858 --> 00:02:58.258
+retention of achieved goals, and completion without regression.
+
+36
+00:02:58.258 --> 00:03:03.093
+Command roughness and replanning jumps assess motion continuity,
+
+37
+00:03:03.093 --> 00:03:07.100
+giving a fuller picture of how the task is completed.
+
+38
+00:03:07.100 --> 00:03:12.450
+To isolate the benefit of search, we compare
+refinement with direct candidate selection
+
+39
+00:03:12.450 --> 00:03:14.210
+at the same evaluation budget.
+
+40
+00:03:14.210 --> 00:03:20.035
+Refinement improves LeHome-Fold success by 4.17 percentage points,
+
+41
+00:03:20.035 --> 00:03:24.733
+showing that how candidates are explored matters alongside how they are scored.
+
+42
+00:03:24.733 --> 00:03:29.588
+The corresponding comparison on LIBERO-Long gains 2.80 percentage points.
+
+43
+00:03:29.588 --> 00:03:34.818
+The full method achieves the highest overall success in both benchmarks,
+
+44
+00:03:34.818 --> 00:03:39.378
+while the component comparisons show that their effects depend on
+
+45
+00:03:39.378 --> 00:03:42.133
+how prediction, evaluation, and search are combined.
+
+46
+00:03:42.133 --> 00:03:49.343
+Future work targets better-calibrated forecasts, stronger
+critic ranking within each state, and adaptive planning compute,
+
+47
+00:03:49.343 --> 00:03:54.700
+alongside supervision on executed prefixes and deployment on physical robots.
+
+48
+00:03:55.050 --> 00:03:56.250
+Thank you for listening.

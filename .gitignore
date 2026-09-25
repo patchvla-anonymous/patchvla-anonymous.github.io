@@ -12,3 +12,12 @@ qa/
 
 # Local source copies; the public preview uses root-level media.
 /assets/
+
+# Public project overview only; preserve other private source assets.
+!/assets/
+/assets/*
+!/assets/videos/
+/assets/videos/*
+!/assets/videos/patchvla-overview.mp4
+!/assets/videos/patchvla-overview-poster.jpg
+!/assets/videos/patchvla-overview.en.vtt
