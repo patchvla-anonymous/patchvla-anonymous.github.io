@@ -41,7 +41,7 @@
       const item = el('span', 'recorded-phase-segment');
       item.style.width = `${(segment.end - segment.start) / clip.duration * 100}%`;
       item.style.backgroundColor = color(segment.phase);
-      const name = Number.isInteger(segment.phase) ? clip.phaseLabels[segment.phase] : 'Awaiting first prediction';
+      const name = Number.isInteger(segment.phase) ? clip.phaseLabels[segment.phase] : 'Start';
       item.title = `${name} · ${segment.start.toFixed(2)}–${segment.end.toFixed(2)} s`;
       strip.append(item);
     });
@@ -63,7 +63,7 @@
     const panel = el('div', 'inline-signals');
     const stats = el('div', 'inline-stats');
     const phaseBox = el('div', 'phase-stat');
-    const phase = el('strong', 'inline-phase', 'Awaiting signal');
+    const phase = el('strong', 'inline-phase', '—');
     phaseBox.append(el('span', 'stat-label', 'Predicted phase'), phase);
     const progressBox = el('div', 'progress-stat');
     const progressValue = el('strong', 'inline-progress-value', '—');
@@ -72,12 +72,12 @@
     progressBox.append(el('span', 'stat-label', 'Local progress'), progressValue, progressTrack);
     const criticBox = el('div', 'critic-stat');
     const critic = el('strong', 'inline-critic', '—');
-    criticBox.append(el('span', 'stat-label', 'Selected critic'), critic);
+    criticBox.append(el('span', 'stat-label', 'Critic score'), critic);
     stats.append(phaseBox, progressBox, criticBox);
 
     const historyHeading = el('div', 'inline-row-heading');
     const clock = el('span', 'playback-clock', `0.0 / ${clip.duration.toFixed(1)} s`);
-    historyHeading.append(el('span', '', 'Recorded phase · video time'), clock);
+    historyHeading.append(el('span', '', 'Predicted phase over time'), clock);
     const history = el('div', 'phase-history');
     const marker = el('span', 'phase-playhead');
     marker.setAttribute('aria-hidden', 'true');
@@ -89,23 +89,8 @@
       legend.append(item);
     });
 
-    const lower = el('div', 'inline-forecast-and-critic');
-    const forecastBox = el('div', 'inline-forecast');
-    const forecastHeading = el('div', 'inline-row-heading');
-    forecastHeading.append(el('span', '', 'Selected phase forecast'), el('span', '', `1 → ${clip.telemetry[0]?.forecastPhase.length || 'H'}`));
-    const forecast = el('div', 'forecast-ribbon');
-    forecast.setAttribute('role', 'img'); forecast.setAttribute('aria-label', 'Selected candidate phase forecast over future action offsets');
-    forecastBox.append(forecastHeading, forecast, el('p', 'small-axis', 'Future action offsets'));
-    const candidatesBox = el('div', 'inline-candidates');
-    const candidatesHeading = el('div', 'inline-row-heading');
-    candidatesHeading.append(el('span', '', 'Candidate critic scores'), el('span', 'selected-key', 'Selected'));
-    const candidates = el('div', 'candidate-scores');
-    candidates.setAttribute('role', 'img'); candidates.setAttribute('aria-label', 'Candidate critic scores at the latest recorded replanning step');
-    candidatesBox.append(candidatesHeading, candidates);
-    lower.append(forecastBox, candidatesBox);
-    panel.append(stats, historyHeading, history, legend, lower);
+    panel.append(stats, historyHeading, history, legend);
     card.append(caption, surface, panel);
-    card.append(el('p', 'inline-search-note', clip.searchLabel || ''));
 
     let last;
     function update() {
@@ -115,25 +100,12 @@
       const record = atTime(clip, time);
       if (record === last) return;
       last = record;
-      phase.textContent = record ? clip.phaseLabels[record.phase] : 'Awaiting signal';
+      phase.textContent = record ? clip.phaseLabels[record.phase] : '—';
       phase.style.color = record ? color(record.phase) : '#747079';
       progressValue.textContent = finite(record?.progress) ? `${Math.round(record.progress * 100)}%` : '—';
       progressBar.style.width = `${finite(record?.progress) ? clamp(record.progress) * 100 : 0}%`;
       critic.textContent = format(record?.critic);
       [...legend.children].forEach((item, i) => item.classList.toggle('current-phase', record?.phase === i));
-      forecast.replaceChildren();
-      if (record) record.forecastPhase.forEach((phaseId, i) => {
-        const segment = el('span'); segment.style.backgroundColor = color(phaseId);
-        segment.title = `Action offset ${i + 1}: ${clip.phaseLabels[phaseId]}`;
-        forecast.append(segment);
-      });
-      candidates.replaceChildren();
-      (record?.candidates || []).forEach((score, i) => {
-        const bar = el('span', 'candidate-bar' + (i === record.selected ? ' is-selected' : ''));
-        bar.style.setProperty('--score', clamp(score));
-        bar.title = `C${i + 1}: ${score.toFixed(5)}${i === record.selected ? ' · selected' : ''}`;
-        candidates.append(bar);
-      });
     }
     ['timeupdate', 'seeked', 'loadedmetadata', 'ended'].forEach(event => video.addEventListener(event, update));
     if (video.requestVideoFrameCallback) {
