@@ -25,27 +25,6 @@ function setupTabs(containerSelector, attribute, panelPrefix) {
 }
 setupTabs('.behavior-tabs', 'example', 'example-');
 
-const featuredVideos = Array.from(document.querySelectorAll('.hero-videos video'));
-const playButton = document.getElementById('play-all');
-const status = document.getElementById('player-status');
-function updatePlaybackButton() {
-  const playing = featuredVideos.some((video) => !video.paused && !video.ended);
-  playButton.replaceChildren(document.createTextNode(playing ? 'Ⅱ  Pause both' : '▶  Play both'));
-  playButton.setAttribute('aria-label', playing ? 'Pause both demonstration videos' : 'Play both demonstration videos');
-}
-playButton.addEventListener('click', async () => {
-  if (featuredVideos.some((video) => !video.paused && !video.ended)) {
-    featuredVideos.forEach((video) => video.pause());
-    status.textContent = 'Both demonstrations paused.';
-  } else {
-    const attempts = await Promise.allSettled(featuredVideos.map((video) => video.play()));
-    status.textContent = attempts.every((attempt) => attempt.status === 'fulfilled')
-      ? 'Both demonstrations playing.' : 'Use each video’s play control to start playback.';
-  }
-  updatePlaybackButton();
-});
-featuredVideos.forEach((video) => ['play', 'pause', 'ended'].forEach((event) => video.addEventListener(event, updatePlaybackButton)));
-
 const dialog = document.getElementById('figure-dialog');
 const dialogImage = document.getElementById('dialog-image');
 let figureTrigger;
