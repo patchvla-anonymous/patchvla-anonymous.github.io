@@ -22,3 +22,14 @@ dialog.addEventListener('close', () => figureTrigger?.focus());
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) document.querySelectorAll('video').forEach((video) => video.pause());
 });
+
+const resultRegions = [...document.querySelectorAll('.results-section .table-scroll')];
+function updateTableScrollHints() {
+  resultRegions.forEach((region) => {
+    region.classList.toggle('is-overflowing', region.scrollWidth > region.clientWidth + 1);
+  });
+}
+const tableResizeObserver = new ResizeObserver(updateTableScrollHints);
+resultRegions.forEach((region) => tableResizeObserver.observe(region));
+document.fonts.ready.then(updateTableScrollHints);
+updateTableScrollHints();

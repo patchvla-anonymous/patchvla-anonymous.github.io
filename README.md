@@ -6,7 +6,9 @@
 
 PatchVLA connects action generation, sequence evaluation, and latent search through candidate-aligned process forecasts.
 
-The project page opens with a standalone overview video, followed by the method and fourteen successful demonstrations: four garment categories in LeHome-Fold and ten tasks in LIBERO-Long. Phase, local-progress, and critic predictions follow each rollout.
+The project page follows the method from overview video to explanation, main results and ablations, and fourteen successful demonstrations: four garment categories in LeHome-Fold and ten tasks in LIBERO-Long. Phase, local-progress, and critic predictions follow each rollout.
+
+The Results section presents the four main-text tables with their reported precision, component notation, and qualifications. Bold and underline indicate the best and next distinct values within each table, including ties. Tables remain readable without JavaScript and scroll horizontally on small screens.
 
 The overview uses native video controls, an image poster, and English captions. Its files are `assets/videos/patchvla-overview.mp4`, `assets/videos/patchvla-overview-poster.jpg`, and `assets/videos/patchvla-overview.en.vtt`.
 
