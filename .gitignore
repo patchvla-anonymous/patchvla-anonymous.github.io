@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+_site/
+private/
+qa/
+.env
+.env.*
+*.pem
+*.key
+
+# Local source copies; the public preview uses root-level media.
+/assets/

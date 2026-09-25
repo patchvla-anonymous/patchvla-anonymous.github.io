@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PatchVLA connects action generation, sequence evaluation, and critic-guided latent search through candidate-aligned process forecasts.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#faf9f6">
+  <meta property="og:title" content="PatchVLA — Process-Aware Control with Critic-Guided Latent Search">
+  <meta property="og:description" content="A shared process representation for generating, evaluating, and refining robot actions. Anonymous research project page.">
+  <meta property="og:type" content="website">
+  <title>PatchVLA | Process-Aware Control with Critic-Guided Latent Search</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="#" aria-label="PatchVLA home"><span class="patch-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>PatchVLA<span class="wordmark-dot">.</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#demonstrations">Demonstrations</a><a href="#method">Method</a><a href="#in-action">In action</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <p class="eyebrow"><span class="status-dot"></span> Anonymous research project · ICLR 2027 submission</p>
+      <h1 id="hero-title"><span class="hero-name">PatchVLA</span><br>Process-Aware Control<br><span class="muted-title">with Critic-Guided Latent Search</span></h1>
+      <p class="hero-deck">Forecast the process. Evaluate the candidate.<br class="desktop-break"> Refine the action before execution.</p>
+      <div class="hero-actions">
+        <a class="button button-dark" href="#method"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6v6H4zM14 13h6v6h-6zM14 8h5v2M5 16h5v-2"/></svg>Explore the method</a>
+        <a class="button button-light" href="#demonstrations"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7z"/></svg>Watch the rollouts</a>
+      </div>
+      <p class="authors">Anonymous authors · Under double-blind review</p>
+    </section>
+
+    <section id="demonstrations" class="showcase wrap" aria-labelledby="demo-title">
+      <div class="section-topline"><h2 id="demo-title">Two settings. One process-aware controller.</h2><button id="play-all" class="text-button" type="button"><span aria-hidden="true">▶</span> Play both</button></div>
+      <div class="hero-videos">
+        <figure class="video-feature">
+          <div class="video-surface"><video id="lehome-video" controls loop muted playsinline preload="metadata" poster="lehome-fold.jpg" aria-label="PatchVLA folds a short-sleeved garment in LeHome-Fold"><source src="lehome-fold.mp4" type="video/mp4">Your browser does not support embedded video. <a href="lehome-fold.mp4">Download the rollout.</a></video></div>
+          <figcaption><div><span class="benchmark-kicker">Deformable manipulation</span><h3>LeHome-Fold</h3></div><p>Left sleeve → right sleeve → torso fold</p></figcaption>
+        </figure>
+        <figure class="video-feature">
+          <div class="video-surface"><video id="libero-video" controls loop muted playsinline preload="metadata" poster="libero-long.jpg" aria-label="PatchVLA places alphabet soup and tomato sauce in a basket in LIBERO-Long"><source src="libero-long.mp4" type="video/mp4">Your browser does not support embedded video. <a href="libero-long.mp4">Download the rollout.</a></video></div>
+          <figcaption><div><span class="benchmark-kicker">Sequential object manipulation</span><h3>LIBERO-Long</h3></div><p>Place soup → place tomato sauce</p></figcaption>
+        </figure>
+      </div>
+      <p class="media-note">Selected successful simulation rollouts. The LIBERO-Long demonstrations use the archived 16 × 2 controller.</p>
+    </section>
+
+    <section id="overview" class="paper-section wrap" aria-labelledby="overview-title">
+      <div class="section-heading"><p class="eyebrow">01 / The idea</p><h2 id="overview-title">Actions describe motion.<br><em>Process forecasts give it context.</em></h2></div>
+      <div class="overview-copy"><p>From the same observation, a generative vision-language-action model can propose several plausible action chunks. The decision is which candidate advances the task through the right sequence of interactions.</p><p><strong>PatchVLA connects generation and evaluation with candidate-aligned process forecasts.</strong> For each proposed action sequence, it predicts interaction phase, local progress, and subtask boundaries. A sequence critic evaluates the resulting action–process trajectory and guides a search over the policy’s latent proposals.</p></div>
+      <figure class="paper-figure"><button class="figure-zoom" type="button" data-image="figure1.webp" data-title="PatchVLA motivation" aria-label="Enlarge PatchVLA motivation figure"><img src="figure1.webp" width="2000" height="800" loading="lazy" alt="Comparison of action generation and evaluation paradigms, leading to PatchVLA’s process-aware candidate interface."><span class="zoom-label" aria-hidden="true">View figure ↗</span></button><figcaption><span>Figure 1.</span> Process structure connects action generation, candidate evaluation, and latent search.</figcaption></figure>
+    </section>
+
+    <section id="method" class="method-section" aria-labelledby="method-title"><div class="wrap">
+      <div class="section-heading"><p class="eyebrow">02 / The method</p><h2 id="method-title">One representation,<br><em>three connected decisions.</em></h2><p class="section-intro">Each candidate carries its own forecast through generation, evaluation, and refinement.</p></div>
+      <ol class="method-steps">
+        <li><span class="step-number">01</span><h3>Generate &amp; forecast</h3><p>A process-conditioned flow policy proposes action chunks. For each chunk, an aligned forecast describes <strong>phase, local progress, and boundary probability</strong>.</p><div class="token-key"><span class="phase">Phase</span><span class="progress">Progress</span><span class="boundary">Boundary</span></div></li>
+        <li><span class="step-number">02</span><h3>Evaluate the sequence</h3><p>A sequence critic combines <strong>observation, candidate actions, and predicted process</strong> to evaluate each proposed continuation.</p><div class="method-notation">observation + actions + process → score</div></li>
+        <li><span class="step-number">03</span><h3>Refine &amp; execute</h3><p>Critic-guided, MPPI-like updates refine the <strong>latent proposal distribution</strong>. The controller selects a complete evaluated chunk, executes a short prefix, and replans.</p><div class="method-notation">latent search → intact candidate → action prefix</div></li>
+      </ol>
+      <figure class="paper-figure method-figure"><button class="figure-zoom" type="button" data-image="figure2.webp" data-title="PatchVLA framework" aria-label="Enlarge PatchVLA framework"><img src="figure2.webp" loading="lazy" alt="PatchVLA framework: a process-conditioned action expert generates candidates, an action–process sequence critic evaluates them, and latent MPPI refinement updates proposals."><span class="zoom-label" aria-hidden="true">View figure ↗</span></button><figcaption><span>Figure 2.</span> Candidate-aligned forecasts connect the flow actor to sequence evaluation and critic-guided latent refinement. Updates act on latent proposals; execution uses an intact candidate.</figcaption></figure>
+      <details class="training-details"><summary><span>How is PatchVLA trained?</span><span class="details-mark" aria-hidden="true">+</span></summary><div class="training-content"><p>Sparse expert anchors and offline VLM-assisted stage labeling provide process supervision. Actor training learns action generation and process prediction; recorded candidate outcomes then supervise the sequence critic. The action generator stays frozen during planning.</p><button class="figure-zoom" type="button" data-image="figure3.webp" data-title="Data preparation and staged training" aria-label="Enlarge training figure"><img src="figure3.webp" loading="lazy" alt="Expert anchors and VLM-assisted annotation, followed by staged actor and critic training."></button></div></details>
+    </div></section>
+
+
+    <section id="in-action" class="behavior-section" aria-labelledby="behavior-title"><div class="wrap">
+      <div class="section-heading"><p class="eyebrow">03 / Inside a decision</p><h2 id="behavior-title">See the signals<br><em>behind the motion.</em></h2><p class="section-intro">Task milestones, process forecasts, candidate evaluation, and refinement in two recorded episodes.</p></div>
+      <div class="behavior-tabs" role="tablist" aria-label="Mechanism examples"><button role="tab" id="tab-example-lehome" aria-controls="example-lehome" aria-selected="true" tabindex="0" data-example="lehome">LeHome-Fold</button><button role="tab" id="tab-example-libero" aria-controls="example-libero" aria-selected="false" tabindex="-1" data-example="libero">LIBERO-Long</button></div>
+      <figure id="example-lehome" role="tabpanel" aria-labelledby="tab-example-lehome" class="paper-figure behavior-figure"><button class="figure-zoom" type="button" data-image="figure4.webp" data-title="LeHome-Fold: process signals and candidate selection" aria-label="Enlarge LeHome-Fold mechanism figure"><img src="figure4.webp" loading="lazy" alt="Four garment-folding milestones, process forecasts, Critic selecting C2, and two latent refinement rounds."><span class="zoom-label" aria-hidden="true">View figure ↗</span></button><figcaption>At the highlighted folding decision, the controller selects C2 and executes a five-action prefix. Local progress resets across subtasks; phase and boundary predictions describe the transitions.</figcaption></figure>
+      <figure id="example-libero" role="tabpanel" aria-labelledby="tab-example-libero" class="paper-figure behavior-figure" hidden><button class="figure-zoom" type="button" data-image="figure5.webp" data-title="LIBERO-Long: process signals and candidate selection" aria-label="Enlarge LIBERO-Long mechanism figure"><img src="figure5.webp" loading="lazy" alt="Four placement milestones, process forecasts, Critic candidate comparison, and latent refinement from the archived 16 by 2 rollout."><span class="zoom-label" aria-hidden="true">View figure ↗</span></button><figcaption>In the archived 16 × 2 placement example, selected C1 has lower total planning cost despite a slightly lower success score. The configured weighted medoid returns a complete candidate. Time is milestone-aligned.</figcaption></figure>
+    </div></section>
+
+    <section class="paper-section wrap gallery-section" aria-labelledby="gallery-title"><div class="section-heading"><p class="eyebrow">04 / More rollouts</p><h2 id="gallery-title">Different objects.<br><em>Sequential interactions.</em></h2></div>
+      <div class="gallery">
+        <figure><video controls muted loop playsinline preload="none" poster="lehome-seen.jpg" aria-label="Successful folding of another seen garment"><source src="lehome-seen.mp4" type="video/mp4"></video><figcaption><span>LeHome-Fold · Seen</span><h3>Fold a short-sleeved top</h3></figcaption></figure>
+        <figure><video controls muted loop playsinline preload="none" poster="lehome-unseen.jpg" aria-label="Successful folding of an unseen garment"><source src="lehome-unseen.mp4" type="video/mp4"></video><figcaption><span>LeHome-Fold · Unseen</span><h3>Transfer to an unseen garment</h3></figcaption></figure>
+        <figure><video controls muted loop playsinline preload="none" poster="libero-drawer.jpg" aria-label="Place a bowl in a drawer and close it"><source src="libero-drawer.mp4" type="video/mp4"></video><figcaption><span>LIBERO-Long · Archived 16 × 2</span><h3>Place the bowl, then close the drawer</h3></figcaption></figure>
+        <figure><video controls muted loop playsinline preload="none" poster="libero-moka.jpg" aria-label="Place both moka pots on the stove"><source src="libero-moka.mp4" type="video/mp4"></video><figcaption><span>LIBERO-Long · Archived 16 × 2</span><h3>Place both moka pots on the stove</h3></figcaption></figure>
+      </div>
+    </section>
+
+<section class="paper-cta wrap" aria-labelledby="closing-title"><div><p class="eyebrow">A shared process interface</p><h2 id="closing-title">PatchVLA</h2><p>Process-Aware Control with Critic-Guided Latent Search</p></div><a class="button button-dark" href="#demonstrations">Explore the demonstrations <span aria-hidden="true">↑</span></a></section>
+  </main>
+  <footer class="site-footer wrap"><a class="wordmark" href="#">PatchVLA<span class="wordmark-dot">.</span></a><p>Anonymous project page for double-blind review.</p><a href="#" class="back-top">Back to top ↑</a></footer>
+
+  <dialog id="figure-dialog" aria-labelledby="figure-dialog-title"><div class="dialog-top"><h2 id="figure-dialog-title">Figure</h2><button id="close-figure" type="button" aria-label="Close enlarged figure">×</button></div><img id="dialog-image" alt=""><p>Press Esc or click outside the figure to close.</p></dialog>
+  <p id="player-status" class="sr-only" aria-live="polite"></p>
+</body>
+</html>
